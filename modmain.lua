@@ -66,53 +66,6 @@ elseif unlock_character == 3 then
 end
 AddGamePostInit(unlockwaxwell)
 
--- Maxwell's recipes tab
-RECIPETABS['WAXWELL'] = {str = "WAXWELL", sort=999, icon = "images/inventoryimages/storeroom.tex", icon_atlas = "images/inventoryimages/storeroom.xml"}STRINGS.TABS.WAXWELL = "Maxwell"
-
--- Maxwell's recipes
--------------------------------------------------------
-wax_panel_0 = Recipe("tophat_magician",
-	{ 
-		Ingredient("tophat", 1),
-		Ingredient("nightmarefuel", 2)
-	},
-	RECIPETABS.WAXWELL, 
-	{ SCIENCE = 0 }
-)
-wax_panel_0.atlas = "images/inventoryimages/tophat_magician.xml"
-
--------------------------------------------------------
-wax_panel_1 = Recipe("magician_chest",
-	{ 
-		Ingredient("silk", 1), 
-		Ingredient("boards", 4), 
-		Ingredient("nightmarefuel", 9) 
-	}, 
-	RECIPETABS.WAXWELL, 
-	TECH.NONE, 
-	"magician_chest_placer"
-)
-wax_panel_1.atlas = "images/inventoryimages/magician_chest.xml"
--------------------------------------------------------
-wax_panel_2 = Recipe("waxwelljournal",
-	{ 
-		Ingredient("papyrus", 2), 
-		Ingredient("nightmarefuel", 2),
-	}, 
-	RECIPETABS.WAXWELL, 
-	{ SCIENCE = 0 }
-)
-wax_panel_2.atlas = "images/inventoryimages/storeroom.xml"
-STRINGS.RECIPE_DESC.WAXWELLJOURNAL = "-50 health on craft"
--------------------------------------------------------
-
--- Codex umbra recipes tab
-RECIPETABS['CODEX'] = {str = "CODEX", sort=999, icon = "images/inventoryimages/storeroom.tex", icon_atlas = "images/inventoryimages/storeroom.xml"}STRINGS.TABS.CODEX = "Codex Umbra"
-
--- Codex umbra recipes
-cod_panel_0 = Recipe("cupboard",{ Ingredient("cutstone", 2), Ingredient("marble", 2), Ingredient("boards", 2) }, RECIPETABS.CODEX, { SCIENCE = 0 })
-cod_panel_0.atlas = "images/inventoryimages/storeroom.xml"
-
 -- Magician's chest
 local function updatestoreroom(inst)
 	inst.components.container.widgetpos = _G.Vector3(360 - (12 * 4.5), 170, 0)
