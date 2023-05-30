@@ -81,20 +81,11 @@ wax_panel_0 = Recipe("tophat_magician",
 wax_panel_0.atlas = "images/inventoryimages/tophat_magician.xml"
 
 -------------------------------------------------------
--- wax_panel_1 = Recipe("magician_chest",
-	-- { 
-		-- Ingredient("silk", 1), 
-		-- Ingredient("boards", 4), 
-		-- Ingredient("nightmarefuel", 9) 
-	-- }, 
-	-- RECIPETABS.WAXWELL, 
-	-- TECH.NONE, 
-	-- "magician_chest_placer"
--- )
--- wax_panel_1.atlas = "images/inventoryimages/magician_chest.xml"
 wax_panel_1 = Recipe("magician_chest",
 	{ 
-		Ingredient("cutgrass", 1), 
+		Ingredient("silk", 1), 
+		Ingredient("boards", 4), 
+		Ingredient("nightmarefuel", 9) 
 	}, 
 	RECIPETABS.WAXWELL, 
 	TECH.NONE, 

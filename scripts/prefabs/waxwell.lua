@@ -22,10 +22,6 @@ local start_inv =
 	"nightmarefuel",
 	"nightmarefuel",
 	"nightmarefuel",
-	"papyrus",
-	"papyrus",
-	"tophat",
-	"tophat",
 }
 
 local function custom_init(inst)

@@ -26,7 +26,7 @@ local function onhammered(inst, worker)
 	inst.components.lootdropper:DropLoot()
 	inst.components.container:DropEverything()
 	
-	SpawnPrefab("collapse_big").Transform:SetPosition(inst.Transform:GetWorldPosition())
+	SpawnPrefab("collapse_small").Transform:SetPosition(inst.Transform:GetWorldPosition())
 	
 	inst.SoundEmitter:PlaySound("dontstarve/common/destroy_wood")
 	inst:Remove()
@@ -41,13 +41,14 @@ end
 
 local function onbuilt(inst)
 	inst.AnimState:PlayAnimation("place")
-	inst.AnimState:PushAnimation("closed")
+	inst.AnimState:PushAnimation("closed", false)
+	inst.SoundEmitter:PlaySound("dontstarve/common/craftable/chest")
 end
 
 local slotpos = {}
 for y = 2, 0, -1 do
 	for x = 0, 3 do
-		table.insert(slotpos, Vector3(80*x-346*2+90, 80*y-100*2+130,0))
+		table.insert(slotpos, Vector3(80*x-346*2+72, 80*y-100*2+130,0))
 	end
 end
 
@@ -60,14 +61,14 @@ local function fn(Sim)
 	local minimap = inst.entity:AddMiniMapEntity()
 	minimap:SetIcon("magician_chest.tex")
 
-	MakeObstaclePhysics(inst, 1.2)
+	MakeObstaclePhysics(inst, 0.5)
 
 	inst:AddTag("structure")
 
 	inst.AnimState:SetBank("magician_chest")
 	inst.AnimState:SetBuild("magician_chest")
 
-	inst.AnimState:PushAnimation("closed", true)
+	inst.AnimState:PushAnimation("closed")
 
 	inst:AddComponent("inspectable")
 	inst:AddComponent("container")
@@ -86,6 +87,9 @@ local function fn(Sim)
 	inst.components.workable:SetWorkLeft(5)
 	inst.components.workable:SetOnWorkCallback(onhit)
 	inst.components.workable:SetOnFinishCallback(onhammered)
+	
+	inst:ListenForEvent( "onbuilt", onbuilt)
+	MakeSnowCovered(inst, .01)
 
 	return inst
 end
