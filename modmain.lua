@@ -31,6 +31,7 @@ Assets =
 	Asset("ATLAS", "images/inventoryimages/tophat_magician.xml"),
 	Asset("ATLAS", "images/inventoryimages/storeroom.xml"),
 	Asset("ATLAS", "images/inventoryimages/magician_chest.xml"),
+	Asset("ATLAS", "minimap/magician_chest.xml"),
 }
 
 AddMinimapAtlas("minimap/magician_chest.xml")
