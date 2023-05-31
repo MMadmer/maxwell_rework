@@ -51,7 +51,11 @@ elseif unlock_character == 2 then
 		if self.persistdata.unlocked_characters[character] then
 			return true
 		end
-		if not table.contains({'willow', 'wendy', 'wolfgang', 'wilton', 'wx78', 'wickerbottom', 'wes', 'waxwell', 'woodie', 'wagstaff','wathgrithr', 'webber','walani', 'warly', 'wilbur', 'woodlegs','warbucks','wilba','wormwood', 'wheeler'}, character) then
+		if not table.contains({'willow', 'wendy', 'wolfgang', 'wilton', 'wx78',
+							   'wickerbottom', 'wes', 'waxwell', 'woodie',
+							   'wagstaff','wathgrithr', 'webber','walani',
+							   'warly', 'wilbur', 'woodlegs','warbucks','wilba',
+							   'wormwood', 'wheeler'}, character) then
 			return true
 		end
 		return false

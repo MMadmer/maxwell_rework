@@ -13,13 +13,15 @@ local prefabs =
 local function onopen(inst)
 	inst.SoundEmitter:PlaySound("dontstarve/wilson/chest_open")
 	
-	inst.AnimState:PlayAnimation("opened")
+	inst.AnimState:PlayAnimation("open")
+	inst.AnimState:PushAnimation("loop")
 end
 
 local function onclose(inst)
 	inst.SoundEmitter:PlaySound("dontstarve/wilson/chest_close")
 	
-	inst.AnimState:PlayAnimation("closed")
+	inst.AnimState:PlayAnimation("close")
+	inst.AnimState:PushAnimation("closed")
 end
 
 local function onhammered(inst, worker)
@@ -34,7 +36,7 @@ end
 
 local function onhit(inst, worker)
 	inst.AnimState:PlayAnimation("hit")
-	inst.AnimState:PushAnimation("closed")
+	onclose(inst)
 	
 	inst.components.container:Close()
 end
