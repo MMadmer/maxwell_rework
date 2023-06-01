@@ -83,6 +83,8 @@ local function fn(Sim)
 	inst.components.container.side_align_tip = 160
 
 	inst:AddComponent("lootdropper")
+	inst:AddTag("shared")
+	inst:AddTag("shadosw")
 
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
@@ -91,7 +93,7 @@ local function fn(Sim)
 	inst.components.workable:SetOnFinishCallback(onhammered)
 	
 	inst:ListenForEvent( "onbuilt", onbuilt)
-	MakeSnowCovered(inst, .01)
+	MakeSnowCovered(inst)
 
 	return inst
 end
@@ -100,4 +102,5 @@ STRINGS.NAMES.MAGICIAN_CHEST = "Magician's Chest"
 STRINGS.RECIPE_DESC.MAGICIAN_CHEST = "Imprison your belongings in  a shadowy vortex."
 STRINGS.CHARACTERS.GENERIC.DESCRIBE.MAGICIAN_CHEST = "It's the safest place to be"
 
-return Prefab( "common/magician_chest", fn, assets), MakePlacer("common/magician_chest_placer", "magician_chest", "magician_chest", "closed")
+return Prefab( "common/magician_chest", fn, assets), 
+	   MakePlacer("common/magician_chest_placer", "magician_chest", "magician_chest", "closed")

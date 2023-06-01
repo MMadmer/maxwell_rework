@@ -24,6 +24,8 @@ PrefabFiles =
 {
 	"tophat_magician",
 	"magician_chest",
+	"waxwell", 
+	"world",
 }
 
 Assets =
