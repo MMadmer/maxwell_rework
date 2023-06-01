@@ -209,7 +209,7 @@ local function fn(Sim)
 	inst:AddComponent("globalcolourmodifier")
 	
 	inst.PocketDimensionContainers = {}
-	--inst.PocketDimensionContainers["shadow"] = "test"
+	inst.PocketDimensionContainers["shadow"] = {}
 
     inst.OnSave = OnSave
     inst.OnLoad = OnLoad

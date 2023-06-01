@@ -84,7 +84,7 @@ local function fn(Sim)
 
 	inst:AddComponent("lootdropper")
 	inst:AddTag("shared")
-	inst:AddTag("shadosw")
+	inst:AddTag("shadow")
 
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)

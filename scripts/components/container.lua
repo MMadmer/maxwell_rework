@@ -241,6 +241,7 @@ function Container:Close()
 		
 		if self:IsShared() then
 			GetWorld().PocketDimensionContainers[self:GetDimension()] = self.slots
+			print(#GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)])
 		end
 		
 		self:OnClose(old_opener)
@@ -253,8 +254,8 @@ function Container:Open(doer)
 		if self:IsShared() then
 			--print("Is shared")
 			--print(#GetWorld().PocketDimensionContainers["shadow"])
-			GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)] = self.slots
 			print(#GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)])
+			self.slots = GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)]
 		end
 		
 		if doer and doer.HUD then
