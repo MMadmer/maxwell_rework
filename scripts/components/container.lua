@@ -9,6 +9,8 @@ local Container = Class(function(self, inst)
     self.acceptsstacks = true
     self.side_widget = false
     self.type = "chest"
+	
+	self.wasOpened = false
 end)
 
 
@@ -21,6 +23,52 @@ function Container:NumItems()
     return num
 end
 
+function Container:IsShared()
+	return self.inst:HasTag("shared")
+end
+
+function Container:GetDimension()
+	for i, dim in pairs(GLOBAL_UTILS.DIMENSIONS) do
+		if self.inst:HasTag(dim) then
+			return dim
+		end
+	end
+
+	print("Dimension not found:", self.inst.prefab)
+	return nil
+end
+
+function Container:FindDimAnalog()
+	-- Get all spawned entities
+	local entities = TheSim:FindEntities(0, 0, 0, 10000, {})
+	
+	for i, entity in ipairs(entities) do
+		-- Access to every found entity
+		if entity:HasTag("shared") and entity.components.container:GetDimension() == self:GetDimension() and entity ~= self.inst then
+			return entity
+		end
+	end
+	
+	return nil
+end
+
+function Container:OpenedCount()
+	-- Get all spawned entities
+	local entities = TheSim:FindEntities(0, 0, 0, 10000, {})
+	local counter = 0
+	
+	for i, entity in ipairs(entities) do
+		-- Access to every found entity
+		if entity:HasTag("shared") and entity.components.container:GetDimension() == self:GetDimension() and entity ~= self.inst then
+			if entity.components.container.wasOpened then
+				counter = counter + 1
+			end
+		end
+	end
+	
+	return counter
+end
+
 function Container:OnRemoveEntity()
 	if self.open then
 		local old_opener = self.opener
@@ -31,8 +79,28 @@ function Container:OnRemoveEntity()
 		end
 		self:OnClose(old_opener)
 	end
+	
+	if self:IsShared() then
+		local entity = self:FindDimAnalog()
+		-- print(#GetWorld().PocketDimensionContainers[self:GetDimension()])
+		
+		-- if entity ~= nil then
+			-- entity.components.container.slots = GetWorld().PocketDimensionContainers[self:GetDimension()]
+		-- else
+			-- local x, y, z = 0, 0, -100
+			-- local spawnedPrefab  = SpawnPrefab(self.inst.prefab)
+			
+			-- spawnedPrefab.Transform:SetPosition(x, y, z)
+            -- spawnedPrefab.Physics:Teleport(x, y, z)
+			-- spawnedPrefab.components.container.slots = GetWorld().PocketDimensionContainers[self:GetDimension()]
+		-- end
+		
+		-- Drop loot if last dimension container
+		if entity == nil or self:OpenedCount() == 0 then
+			self:DropEverything()
+		end
+	end
 end
-
 
 function Container:IsFull()
 	local items = 0
@@ -212,22 +280,6 @@ function Container:GetItemSlot(item)
     end
 end
 
-function Container:IsShared()
-	return self.inst:HasTag("shared")
-end
-
-function Container:GetDimension()
-	for i, dim in pairs(GLOBAL_UTILS.DIMENSIONS) do
-		print(dim)
-		if self.inst:HasTag(dim) then
-			return dim
-		end
-	end
-
-	print("Dimension not found:", self.inst.prefab)
-	return nil
-end
-
 function Container:Close()
 	
 	if self.open then
@@ -240,7 +292,6 @@ function Container:Close()
 		
 		if self:IsShared() then
 			GetWorld().PocketDimensionContainers[self:GetDimension()] = self.slots
-			--self.slots = {}
 			print(#GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)])
 		end
 		
@@ -249,14 +300,16 @@ function Container:Close()
 end
 
 function Container:Open(doer)
+	self.wasOpened = true
+
 	self.opener = doer
 	if not self.open then	
 		if self:IsShared() then
 			--print("Is shared")
-			print(#GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)])
-			self.slots = GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)]
+			print(#GetWorld().PocketDimensionContainers[self:GetDimension()])
+			self.slots = GetWorld().PocketDimensionContainers[self:GetDimension()]
 			if #GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)] > 0 then
-				for key, dim in pairs(GetWorld().PocketDimensionContainers["shadow"]) do
+				for key, dim in pairs(GetWorld().PocketDimensionContainers[self:GetDimension()]) do
 					print(key)
 					print(dim)
 				end
@@ -476,6 +529,8 @@ function Container:OnLoad(data, newents)
 			print("Not empty:", self.prefab)
 		end
 	end
+	
+	self.wasOpened = false
 end
 
 

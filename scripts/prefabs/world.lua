@@ -133,7 +133,7 @@ end
 
 local function SaveDimContainers(inst)
 	print("Saving")
-	-- Get all spawned entities by prefab
+	-- Get all spawned entities
 	local entities = TheSim:FindEntities(0, 0, 0, 10000, {})
 	
 	local addedDim = {}

@@ -45,6 +45,13 @@ local function OnUnequip(inst, owner)
 	end
 end
 
+local slotpos = {}
+for y = 2, 0, -1 do
+	for x = 0, 3 do
+		table.insert(slotpos, Vector3(80*x-346*2+72, 80*y-100*2+130,0))
+	end
+end
+
 local function fn()
 	local inst = CreateEntity()
 	local trans = inst.entity:AddTransform()
@@ -61,8 +68,8 @@ local function fn()
 	inst.components.inventoryitem.imagename = "tophat_magician"
     inst.components.inventoryitem.atlasname = "images/inventoryimages/tophat_magician.xml"
 	
-	inst:AddComponent("dapperness")
-	inst.components.dapperness.dapperness = TUNING.DAPPERNESS_MED
+	-- inst:AddComponent("dapperness")
+	-- inst.components.dapperness.dapperness = TUNING.DAPPERNESS_MED
 	
 	inst:AddComponent("fueled")
     inst.components.fueled.fueltype = "USAGE"
@@ -73,6 +80,16 @@ local function fn()
     inst.components.equippable.equipslot = EQUIPSLOTS.HEAD
     inst.components.equippable:SetOnEquip( OnEquip )
     inst.components.equippable:SetOnUnequip( OnUnequip )
+	
+	-- Container
+	inst:AddTag("shared")
+	inst:AddTag(GLOBAL_UTILS.DIMENSIONS[1])
+	
+	inst:AddComponent("container")
+	inst.components.container:SetNumSlots(#slotpos)
+
+	inst.components.container.widgetslotpos = slotpos
+	inst.components.container.side_align_tip = 160
 	
     return inst
 end
