@@ -96,12 +96,14 @@ local function fn(Sim)
 	-- After shared always dimension
 	inst:AddTag("shared")
 	inst:AddTag(GLOBAL_UTILS.DIMENSIONS[1])
-
-	inst:AddComponent("workable")
-	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
-	inst.components.workable:SetWorkLeft(5)
-	inst.components.workable:SetOnWorkCallback(onhit)
-	inst.components.workable:SetOnFinishCallback(onhammered)
+	
+	if TUNING.DESTRUCTION then
+		inst:AddComponent("workable")
+		inst.components.workable:SetWorkAction(ACTIONS.HAMMER)
+		inst.components.workable:SetWorkLeft(5)
+		inst.components.workable:SetOnWorkCallback(onhit)
+		inst.components.workable:SetOnFinishCallback(onhammered)
+	end
 	
 	inst:ListenForEvent( "onbuilt", onbuilt)
 	MakeSnowCovered(inst)

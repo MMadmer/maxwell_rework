@@ -71,10 +71,10 @@ local function fn()
 	-- inst:AddComponent("dapperness")
 	-- inst.components.dapperness.dapperness = TUNING.DAPPERNESS_MED
 	
-	inst:AddComponent("fueled")
-    inst.components.fueled.fueltype = "USAGE"
-	inst.components.fueled:InitializeFuelLevel(TUNING.TOPHAT_MAGICIAN)
-    inst.components.fueled:SetDepletedFn( function(inst) inst:Remove() end)
+	-- inst:AddComponent("fueled")
+    -- inst.components.fueled.fueltype = "USAGE"
+	-- inst.components.fueled:InitializeFuelLevel(TUNING.TOPHAT_MAGICIAN)
+    -- inst.components.fueled:SetDepletedFn( function(inst) inst:Remove() end)
 	
     inst:AddComponent("equippable")
     inst.components.equippable.equipslot = EQUIPSLOTS.HEAD

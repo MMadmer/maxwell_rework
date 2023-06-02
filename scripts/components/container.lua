@@ -91,7 +91,7 @@ function Container:OnRemoveEntity()
 			-- local spawnedPrefab  = SpawnPrefab(self.inst.prefab)
 			
 			-- spawnedPrefab.Transform:SetPosition(x, y, z)
-            -- spawnedPrefab.Physics:Teleport(x, y, z)
+			-- spawnedPrefab.Physics:Teleport(x, y, z)
 			-- spawnedPrefab.components.container.slots = GetWorld().PocketDimensionContainers[self:GetDimension()]
 		-- end
 		

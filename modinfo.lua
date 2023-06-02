@@ -34,4 +34,15 @@ configuration_options =
 		},
 		default = 2
 	},
+	{
+		name = "destruction", 
+		label = "Magician's box destruction", 
+        hover = "Enable/disable Magician's box destruction",
+		options = 
+		{
+			{description = "Enable", data = true,},
+			{description = "Disable (default)", data = false,},
+		},
+		default = false
+	},
 }

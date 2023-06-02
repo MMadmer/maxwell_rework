@@ -19,6 +19,7 @@ local seg_time = 30 --each segment of the clock is 30 seconds
 local total_day_time = seg_time*16
 
 TUNING.TOPHAT_MAGICIAN = total_day_time * 8
+TUNING.DESTRUCTION = GetModConfigData('destruction') -- Add "if TUNING.DESTRUCTION" if u set block with "workable" component to ur item
 
 PrefabFiles =
 {
