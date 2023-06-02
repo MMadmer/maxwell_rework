@@ -59,8 +59,7 @@ function Container:SetNumSlots(numslots)
 end
 
 
-function Container:DropEverything()
-    
+function Container:DropEverything()    
     for k = 1,self.numslots do
 		local item = self:RemoveItemBySlot(k)
         if item then
@@ -241,6 +240,7 @@ function Container:Close()
 		
 		if self:IsShared() then
 			GetWorld().PocketDimensionContainers[self:GetDimension()] = self.slots
+			--self.slots = {}
 			print(#GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)])
 		end
 		
@@ -253,9 +253,15 @@ function Container:Open(doer)
 	if not self.open then	
 		if self:IsShared() then
 			--print("Is shared")
-			--print(#GetWorld().PocketDimensionContainers["shadow"])
 			print(#GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)])
 			self.slots = GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)]
+			if #GetWorld().PocketDimensionContainers[self:GetDimension(self.inst)] > 0 then
+				for key, dim in pairs(GetWorld().PocketDimensionContainers["shadow"]) do
+					print(key)
+					print(dim)
+				end
+				--print(GetWorld().PocketDimensionContainers)
+			end
 		end
 		
 		if doer and doer.HUD then
@@ -459,6 +465,17 @@ function Container:OnLoad(data, newents)
             end
         end
     end
+	
+	-- Access to every spawned inst
+	if self:IsShared("shared") then
+		print("Shared")
+		print(self.inst.prefab)
+		print(self:IsEmpty())
+		if not self:IsEmpty() then
+			GetWorld().PocketDimensionContainers[self:GetDimension()] = self.slots
+			print("Not empty:", self.prefab)
+		end
+	end
 end
 
 

@@ -1,5 +1,6 @@
 local groundtiles = require "worldtiledefs"
 local GLOBAL_UTILS = require "utils"
+local json = require("json")
 
 local common_prefabs =
 {
@@ -89,6 +90,9 @@ local common_prefabs =
     "chessjunk3",
     "statue_transition_2",
     "statue_transition",
+	
+	-- Modded prefabs
+	"magician_chest"
 }
 
 local assets =
@@ -121,22 +125,52 @@ function onremove(inst)
     inst.minimap:Remove()
 end
 
+local function TableContains(tableData, element)
+	for _, value in ipairs(tableData) do
+        if value == element then
+            return true
+        end
+    end
+	
+    return false
+end
+
+local function SaveDimContainers(inst)
+	print("Saving")
+	-- Get all spawned entities by prefab
+	local entities = TheSim:FindEntities(0, 0, 0, 10000, {})
+	
+	local addedDim = {}
+	
+	for i, entity in ipairs(entities) do
+		-- Access to every found entity
+		if entity:HasTag("shared") and entity.components.container:IsEmpty() and not TableContains(addedDim, entity.components.container:GetDimension()) then
+			entity.components.container.slots = inst.PocketDimensionContainers[entity.components.container:GetDimension()]
+			table.insert(addedDim, entity.components.container:GetDimension())
+			print(entity.prefab)
+		end
+		
+		if #addedDim == #GLOBAL_UTILS.DIMENSIONS then
+			return
+		end
+	end
+	print("Done")
+end
+
 local function OnSave(inst, data)
     if inst.cave_regenerator_retrofitted then
         data.cave_regenerator_retrofitted = true
     end
+	
+	SaveDimContainers(inst)
 end
 
 local function OnLoad(inst, data)
     if data and data.cave_regenerator_retrofitted then
         inst.cave_regenerator_retrofitted = true
     end
-end
-
-local function SaveSlots()
-	local file = io.open(filename, "w")
 	
-	
+	print("Loaded")
 end
 
 local function fn(Sim)
@@ -209,7 +243,9 @@ local function fn(Sim)
 	inst:AddComponent("globalcolourmodifier")
 	
 	inst.PocketDimensionContainers = {}
-	inst.PocketDimensionContainers["shadow"] = {}
+	for i, dim in pairs(GLOBAL_UTILS.DIMENSIONS) do
+		inst.PocketDimensionContainers[dim] = {}
+	end
 
     inst.OnSave = OnSave
     inst.OnLoad = OnLoad

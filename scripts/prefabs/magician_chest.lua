@@ -26,7 +26,7 @@ end
 
 local function onhammered(inst, worker)
 	inst.components.lootdropper:DropLoot()
-	inst.components.container:DropEverything()
+	--inst.components.container:DropEverything()
 	
 	SpawnPrefab("collapse_small").Transform:SetPosition(inst.Transform:GetWorldPosition())
 	
@@ -52,6 +52,14 @@ for y = 2, 0, -1 do
 	for x = 0, 3 do
 		table.insert(slotpos, Vector3(80*x-346*2+72, 80*y-100*2+130,0))
 	end
+end
+
+local function OnSave(inst, data)
+	print("magician saved")
+end
+
+local function OnLoad(inst, data)
+	print("magician loaded")
 end
 
 local function fn(Sim)
@@ -83,6 +91,8 @@ local function fn(Sim)
 	inst.components.container.side_align_tip = 160
 
 	inst:AddComponent("lootdropper")
+	
+	-- After shared always dimension
 	inst:AddTag("shared")
 	inst:AddTag("shadow")
 
@@ -94,6 +104,9 @@ local function fn(Sim)
 	
 	inst:ListenForEvent( "onbuilt", onbuilt)
 	MakeSnowCovered(inst)
+	
+	inst.OnLoad = OnLoad
+	inst.OnSave = OnSave
 
 	return inst
 end
