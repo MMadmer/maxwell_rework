@@ -1,4 +1,5 @@
 require "prefabutil"
+local GLOBAL_UTILS = require "utils"
 
 local assets =
 {
@@ -55,11 +56,11 @@ for y = 2, 0, -1 do
 end
 
 local function OnSave(inst, data)
-	print("magician saved")
+	--print("magician saved")
 end
 
 local function OnLoad(inst, data)
-	print("magician loaded")
+	--print("magician loaded")
 end
 
 local function fn(Sim)
@@ -94,7 +95,7 @@ local function fn(Sim)
 	
 	-- After shared always dimension
 	inst:AddTag("shared")
-	inst:AddTag("shadow")
+	inst:AddTag(GLOBAL_UTILS.DIMENSIONS[1])
 
 	inst:AddComponent("workable")
 	inst.components.workable:SetWorkAction(ACTIONS.HAMMER)

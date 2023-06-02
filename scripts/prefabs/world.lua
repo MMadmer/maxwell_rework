@@ -1,6 +1,5 @@
 local groundtiles = require "worldtiledefs"
 local GLOBAL_UTILS = require "utils"
-local json = require("json")
 
 local common_prefabs =
 {
@@ -90,9 +89,6 @@ local common_prefabs =
     "chessjunk3",
     "statue_transition_2",
     "statue_transition",
-	
-	-- Modded prefabs
-	"magician_chest"
 }
 
 local assets =
